@@ -12,28 +12,15 @@ Please chose two of the following:
 4.1 Time series challenge: Predict the weekly number of expected service requests per hex for the next 4 weeks.
 """
 #%% Import libraries
-#import numpy as np
 import pandas as pd
-#import h3
 import timeit
 import os
-#import sys
 import os.path
 from os import path
 import requests
-#import wget
-#import gzip
-import zipfile
-#import json
-#import haversine as hs
-#from datetime import datetime
 import warnings
-#from pandas import read_csv
-#from matplotlib import pyplot
 from statsmodels.tsa.ar_model import AutoReg
-#from sklearn.metrics import mean_squared_error
 import numpy
-#from math import sqrt
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 #%% Functions to use
