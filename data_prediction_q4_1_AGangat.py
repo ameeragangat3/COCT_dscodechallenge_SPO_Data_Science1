@@ -53,7 +53,6 @@ def predict_count(series):
     model = AutoReg(train, lags=2)
     model_fit = model.fit()
     coef = model_fit.params
-    # walk forward over time steps in test
     history = [train[i] for i in range(len(train))]
     predictions = list()
     for t in range(len(test)):
@@ -61,7 +60,6 @@ def predict_count(series):
     	obs = test[t]
     	predictions.append(yhat)
     	history.append(obs)
-    #rmse = sqrt(mean_squared_error(test, predictions))
     return predictions
 
 def file_appender(input_data,output_path):
@@ -95,8 +93,6 @@ else:
     with open(sr_hex_gz_fname, "wb") as f:
         r = requests.get(sr_hex_file_url)
         f.write(r.content)
-    #with zipfile.ZipFile(sr_hex_gz_fname, 'r') as zip_ref:
-        #zip_ref.extractall('.')
 
 #%%Extract the data and save to dataframes and variables
 # extract sr.csv and sr_hex.csv
@@ -106,7 +102,6 @@ sr_hex_df = pd.read_csv(sr_hex_gz_fname, compression='zip', header=0, sep=',', q
 sr_hex_df = sr_hex_df[sr_hex_df['department'] == 'Water and Sanitation']
 # filter data to exclude service requests with no location data
 sr_hex_df = sr_hex_df[sr_hex_df['h3_level8_index'] != '0']
-#sr_hex_df = sr_hex_df[0:100000]
 
 # sort data by h3_level_index
 rslt_df = sr_hex_df.sort_values(["h3_level8_index"],inplace = False)
@@ -152,17 +147,13 @@ for i in range(len(h3_list)):
                 print("now at hex number {}".format(i))
             h3_predict_dict[h3_list[i]].append(predict_count(week_num_counts))
 
-#%%
+#%% generate html report
 output_html_path = "data_prediction_q4_1_AGangat.html"
-
-mp_print("Hi, sulayman")
 
 if path.exists("data_prediction_q4_1_AGangat.html"):
     os.remove("data_prediction_q4_1_AGangat.html")
 
 for key, value in h3_predict_dict.items():
-    #print("location hex number {} is predicted to get {} service requests respectively over the next 4 weeks".format(key,value[:5]))
     mp_print("location hex number {} is predicted to get {} service requests respectively over the next 4 weeks".format(key,value[:5]))
-
 
 print("The time taken to complete this script is  {:.2f} minutes".format((timeit.default_timer() - starttime)/60))
