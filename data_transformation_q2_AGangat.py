@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Ameera-Gangat 
+Ameera.Gangat
 COCT DS Code Challenge Question 2
 
 This script is the code submsission for Ameera Gangat for the challenge question as seen below 
